@@ -9,6 +9,7 @@
           />
         </div>
         <button type="button" @click='createDesign()' class="btn btn-danger">Create</button>
+        <a v-if="activeDesign"><router-link to="/order" tag="button" style="margin-left:45px">Order</router-link></a>
         <a v-if="activeDesign" :href="activeDesign" target="_blank" class="btn btn-info float-right">Download</a>
 
 
