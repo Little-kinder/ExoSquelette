@@ -32,7 +32,14 @@ export default {
     components: {
         DesignItem
     },
-    
+    // created() {
+    //     this.$router.options.routes.forEach(route => {
+    //         this.items.push({
+    //             name: route.name
+    //             , path: route.path
+    //         })
+    //     })
+    // },
     data(){ return {
         isActive: false,
         error: null,
