@@ -1,13 +1,7 @@
 <template >
     
     <div class="container">
-        <ul >
-            <li v-for="item in items" :key="item.path">
-            <b-nav-item :to="item.path">
-            {{item.name}}
-            </b-nav-item>
-            </li>
-        </ul>
+        
         <h2>Designs</h2>
         <table class="table table-bordered  table-hover">
             <thead>
@@ -38,14 +32,7 @@ export default {
     components: {
         DesignItem
     },
-    created() {
-        this.$router.options.routes.forEach(route => {
-            this.items.push({
-                name: route.name
-                , path: route.path
-            })
-        })
-    },
+    
     data(){ return {
         isActive: false,
         error: null,
