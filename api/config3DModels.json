@@ -1,0 +1,58 @@
+[
+    {
+        "id": "name_plate",
+        "label": "Badge",
+        "fileName": "name_plate.jscad",
+        "params": {
+            "name": {
+                "default": "Zinedine",
+                "type":"text",
+                "label": "Nom"
+            },
+            "title": {
+                "default": "Zidane",
+                "type":"text",
+                "label": "Titre"
+            },
+            "thickness": {
+                "default": 3.0,
+                "type":"number",
+                "label": "Epaisseur"
+            }
+        }
+    },
+    {
+        "id": "tor",
+        "label": "Anneau",
+        "fileName": "tor.jscad",
+        "params": {
+            "sqrt": {
+                "default": 2.0,
+                "type":"number",
+                "label": "SQRT3 ?"
+            },
+            "radius": {
+                "label": "Rayon",
+                "type":"number",
+                "default": 6.0
+            }
+        }
+    },
+    {
+        "id": "name_writehand",
+        "label": "Nom écrit à la main",
+        "fileName": "name_writehand.jscad",
+        "params": {
+            "name": {
+                "default": "Zinedine",
+                "type":"text",
+                "label": "Nom"
+            },
+            "thickness": {
+                "label": "Epaisseur",
+                "type":"number",
+                "default": 6
+            }
+        }
+    }
+]
