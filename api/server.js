@@ -18,12 +18,6 @@ const con = mysql.createConnection({
   database : "exosquelette",
   port : "3306"
 });
-  
-    con.connect(function(err) {
-     if (err) throw err;
-     console.log("Connecté à la base de données MySQL!");
-    
-   });
 
 const designs = [];
 app.use(function(req, res, next) {
@@ -98,8 +92,16 @@ app.post('/api/createorder', function (req, res) {
   const customer = req.body.order;
   var id_item = customer[4];
   var quantity = customer[3];
-  console.log(id_item);
-  console.log(quantity);
+  con.connect(function(err) {
+    if (err) throw err;
+    console.log("Connecté à la base de données MySQL!");
+    var sql = "INSERT INTO commande (id_utilisateur, id_piece, quantite) VALUES (?, ?, ?)";
+    con.query(sql, [1, id_item, quantity], function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+  });
+
   console.log("COMMANDE ::::: " ,customer);
 });
 
