@@ -22,10 +22,7 @@ const mysql = require('mysql');
     con.connect(function(err) {
      if (err) throw err;
      console.log("Connecté à la base de données MySQL!");
-     con.query("SELECT *  FROM tbl_sample", function (err, result) {
-         if (err) throw err;
-         console.log(result);
-       });
+    
    });
 const designs = [];
 app.use(function(req, res, next) {
@@ -98,6 +95,22 @@ app.get('/api/stl/:name', function (req, res, next) {
 
 app.post('/api/createorder', function (req, res) {
   const customer = req.body.order;
+  
+ 
+    
+   var sql = "INSERT INTO commande(id_utilisateur,id_piece, quantite) VALUES (1, '12',12)";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+   /* let id_item = customer.idItem;
+  let quantity = customer.quantity;
+  let sql = "INSERT INTO commande (id_utilisateur, id_piece, quantite) VALUES (?, ?, ?)";
+  con.query(sql, [ 1, id_item, quantity ], function(err, rows) {
+
+});*/
+    
+  
   console.log("COMMANDE ::::: " ,customer);
 });
 
