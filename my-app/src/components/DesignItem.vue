@@ -3,9 +3,7 @@
         <td>{{ designItem.id }}</td>
         <td>{{ designItem.name }}</td>
         <td>{{ designItem.thickness }}</td>
-        <td> 
-            <router-link :to = '{name:'order', params:{' . {{this.designItem.id}} . '}' class="btn btn-info float-right">Order</router-link>
-        </td>
+        <td><router-link :to="{name : 'order', params : {idItem : designItem.id} }" tag="button" style="margin-left:45px"> Order </router-link></td>
     </tr>          
 </template>
 
