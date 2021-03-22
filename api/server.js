@@ -9,6 +9,22 @@ const app = express(),
       port = 3080;
 
 // place holder for the data
+const mysql = require('mysql');
+
+const con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database : "exosquelette",
+  port : "3306"
+});
+  
+    con.connect(function(err) {
+     if (err) throw err;
+     console.log("Connecté à la base de données MySQL!");
+    
+   });
+
 const designs = [];
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -80,6 +96,10 @@ app.get('/api/stl/:name', function (req, res, next) {
 
 app.post('/api/createorder', function (req, res) {
   const customer = req.body.order;
+  var id_item = customer[4];
+  var quantity = customer[3];
+  console.log(id_item);
+  console.log(quantity);
   console.log("COMMANDE ::::: " ,customer);
 });
 
