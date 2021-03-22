@@ -9,6 +9,21 @@ const app = express(),
       port = 3080;
 
 // place holder for the data
+const mysql = require('mysql');
+
+  const con = mysql.createConnection({
+     host: "localhost",
+     user: "root",
+     password: "",
+     database : "exosquelette",
+     port : "3308"
+   });
+  
+    con.connect(function(err) {
+     if (err) throw err;
+     console.log("Connecté à la base de données MySQL!");
+    
+   });
 const designs = [];
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -47,6 +62,7 @@ app.post('/api/designItem', (req, res) => {
     });
 });
 
+
 // app.get('/api/stl', (req,res) => {
 //   // if(!res.name){
 //   //   res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
@@ -77,10 +93,25 @@ app.get('/api/stl/:name', function (req, res, next) {
 });
 
 
-app.get('api/createorder', function (req, res) {
-  let customerInfo = {};
-  customerInfo.push([req.customerName, req.customerInfo.customerLastName]);
-  console.log(json(customerInfo));
+app.post('/api/createorder', function (req, res) {
+  const customer = req.body.order;
+  
+ 
+    
+   var sql = "INSERT INTO commande(id_utilisateur,id_piece, quantite) VALUES (1, '12',12)";
+    con.query(sql, function (err, result) {
+      if (err) throw err;
+      console.log("1 record inserted");
+    });
+   /* let id_item = customer.idItem;
+  let quantity = customer.quantity;
+  let sql = "INSERT INTO commande (id_utilisateur, id_piece, quantite) VALUES (?, ?, ?)";
+  con.query(sql, [ 1, id_item, quantity ], function(err, rows) {
+
+});*/
+    
+  
+  console.log("COMMANDE ::::: " ,customer);
 });
 
 app.listen(port, () => {
