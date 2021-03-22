@@ -11,6 +11,7 @@
     "@asigloo/vue-dynamic-forms": "^3.14.0",
     "@babylonjs/core": "^4.2.0",
     "@babylonjs/loaders": "^4.2.0",
+    "@jscad/openjscad": "^1.6.1",
     "bootstrap": "^4.5.2",
     "bootstrap-vue": "^2.16.0",
     "core-js": "^3.6.5",

@@ -3,13 +3,13 @@
 <template>
     <div>
         <Header />
-        <form id="commande" @submit="checkForm" action="/something" method="post" novalidate="true">
+        <form id="commande-form" @submit="checkForm" method="get" novalidate="true">
             
-            <p v-if="errors.length > 0">
+            <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
-                <ul>
-                <li v-for="error in errors" v-bind:key="error">{{ error }}</li>
-                </ul>
+            <ul>
+             <li v-for="error in errors" :key="error">{{ error }}</li>
+            </ul>
             </p>
 
             <p>
@@ -33,7 +33,10 @@
             </p>
 
             <p>
-                <input type="submit" value="Valider">  
+                <button type="button" @click='checkOrder()' class= "btn btn-danger"> 
+                    <input type="submit" value="Valider"> 
+                </button>
+                 
             </p>
 
         </form>
@@ -42,34 +45,41 @@
 </template>
 
 <script>
-import Vue from 'vue'
 import Header from './Header.vue'
+import OrderServices from '../services/OrderService'
+
 export default {
     name: 'CreateOrder',
     components: {
     Header
     },
+    data() {
+        return {
+            errors:[],
+            firstname:null,
+            lastname:null,
+            email:null,
+            quantity:null
+        }
+    },
     computed: {
     },
     methods: {
+        checkOrder() {
+            const form = document.getElementById('commande-form');
+            form.addEventListener('submit', this.createOrder);
+            
+        },
         createOrder() {
-            this.console.log('test');
-            return null;
-        }
-    }
-}
+            let order_info = [];
+            order_info.push([this.firstname, this.lastname, this.email, this.quantity, this.activeDesign]);
+                OrderServices.createOrder(order_info).then(order => 
+                {
+                    console.log("commande enregistrée : " + order) 
+                });
+            this.$router.push('home');
 
-new Vue({
-    el: "#commande",
-    data:{
-        errors:[],
-        firstname:null,
-        lastname:null,
-        email:null,
-        quantity:null
-    },
-
-    methods: {
+        },
         checkForm:function(e) {
             this.errors = [];
             if(this.firstname && this.lastname && this.quantity) return true;
@@ -77,9 +87,11 @@ new Vue({
             if(!this.lastname) this.errors.push("Veuillez remplir votre prénom");
             if(!this.quantity) this.errors.push("Veuillez saisir la quantité");
             e.preventDefault();
-        }  
+        }
+    },
+    props : {
+        activeDesign : String
     }
-})
-
+}
 
 </script>

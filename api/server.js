@@ -47,6 +47,7 @@ app.post('/api/designItem', (req, res) => {
     });
 });
 
+
 // app.get('/api/stl', (req,res) => {
 //   // if(!res.name){
 //   //   res.sendFile(path.join(__dirname, '../my-app/build/index.html'));
@@ -77,10 +78,9 @@ app.get('/api/stl/:name', function (req, res, next) {
 });
 
 
-app.get('api/createorder', function (req, res) {
-  let customerInfo = {};
-  customerInfo.push([req.customerName, req.customerInfo.customerLastName]);
-  console.log(json(customerInfo));
+app.post('/api/createorder', function (req, res) {
+  const customer = req.body.order;
+  console.log("COMMANDE ::::: " ,customer);
 });
 
 app.listen(port, () => {
