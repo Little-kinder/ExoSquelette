@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : 127.0.0.1:3308
--- Généré le :  mar. 02 mars 2021 à 13:55
+-- Généré le :  lun. 22 mars 2021 à 15:34
 -- Version du serveur :  8.0.18
 -- Version de PHP :  7.4.3-dev
 
@@ -32,27 +32,11 @@ DROP TABLE IF EXISTS `commande`;
 CREATE TABLE IF NOT EXISTS `commande` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `id_utilisateur` int(11) NOT NULL,
-  `prix_total` int(20) NOT NULL,
+  `id_piece` varchar(20) NOT NULL,
+  `quantite` int(20) NOT NULL,
   PRIMARY KEY (`id`),
   KEY `fk_id_utilisateur` (`id_utilisateur`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
-
--- --------------------------------------------------------
-
---
--- Structure de la table `commande_piece`
---
-
-DROP TABLE IF EXISTS `commande_piece`;
-CREATE TABLE IF NOT EXISTS `commande_piece` (
-  `id` int(11) NOT NULL AUTO_INCREMENT,
-  `id_piece` int(11) NOT NULL,
-  `id_commande` int(11) NOT NULL,
-  `quantite` int(5) NOT NULL,
-  PRIMARY KEY (`id`),
-  KEY `fk_id_piece` (`id_piece`),
-  KEY `fk_id_commande` (`id_commande`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=7 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 
 -- --------------------------------------------------------
 
@@ -101,7 +85,14 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
   `password` varchar(60) NOT NULL,
   `isAdmin` tinyint(1) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=2 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+
+--
+-- Déchargement des données de la table `utilisateur`
+--
+
+INSERT INTO `utilisateur` (`id`, `nom`, `prenom`, `mail`, `password`, `isAdmin`) VALUES
+(1, 'test', 'test', 'test@gmail.com', 'piotrowwgqesr', 0);
 
 --
 -- Contraintes pour les tables déchargées
@@ -112,13 +103,6 @@ CREATE TABLE IF NOT EXISTS `utilisateur` (
 --
 ALTER TABLE `commande`
   ADD CONSTRAINT `fk_id_utilisateur` FOREIGN KEY (`id_utilisateur`) REFERENCES `utilisateur` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
-
---
--- Contraintes pour la table `commande_piece`
---
-ALTER TABLE `commande_piece`
-  ADD CONSTRAINT `fk_id_commande` FOREIGN KEY (`id_commande`) REFERENCES `commande` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT,
-  ADD CONSTRAINT `fk_id_piece` FOREIGN KEY (`id_piece`) REFERENCES `stock_piece` (`id`) ON DELETE RESTRICT ON UPDATE RESTRICT;
 
 --
 -- Contraintes pour la table `piece_3d`
