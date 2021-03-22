@@ -9,6 +9,7 @@
                 <th>Design Id</th>
                 <th>Name</th>
                 <th>Thickness</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
