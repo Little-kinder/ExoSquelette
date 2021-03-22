@@ -28,6 +28,10 @@
             </p>
 
             <p>
+                <label for="designID">DesignID : {{ idItem }}</label>           
+            </p>
+
+            <p>
                 <label for="quantity">Quantité</label>
                 <input type="number" name="quantity" id="quantity" v-model="quantity" min="1">              
             </p>
@@ -59,8 +63,12 @@ export default {
             firstname:null,
             lastname:null,
             email:null,
+            idItem:null,
             quantity:null
         }
+    },
+    created() {
+        this.idItem = this.$route.params.idItem;
     },
     computed: {
     },
@@ -72,7 +80,7 @@ export default {
         },
         createOrder() {
             let order_info = [];
-            order_info.push([this.firstname, this.lastname, this.email, this.quantity, this.activeDesign]);
+            order_info.push([this.firstname, this.lastname, this.email, this.quantity, this.idItem]);
                 OrderServices.createOrder(order_info).then(order => 
                 {
                     console.log("commande enregistrée : " + order) 
@@ -82,9 +90,10 @@ export default {
         },
         checkForm:function(e) {
             this.errors = [];
-            if(this.firstname && this.lastname && this.quantity) return true;
+            if(this.firstname && this.lastname && this.email && this.quantity) return true;
             if(!this.firstname) this.errors.push("Veuillez remplir votre nom");
             if(!this.lastname) this.errors.push("Veuillez remplir votre prénom");
+            if(!this.email) this.errors.push("Veuillez remplir votre email");
             if(!this.quantity) this.errors.push("Veuillez saisir la quantité");
             e.preventDefault();
         }
