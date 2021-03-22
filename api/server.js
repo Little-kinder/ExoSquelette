@@ -9,6 +9,24 @@ const app = express(),
       port = 3080;
 
 // place holder for the data
+const mysql = require('mysql');
+
+  const con = mysql.createConnection({
+     host: "localhost",
+     user: "root",
+     password: "",
+     database : "exosquelette",
+     port : "3308"
+   });
+  
+    con.connect(function(err) {
+     if (err) throw err;
+     console.log("Connecté à la base de données MySQL!");
+     con.query("SELECT *  FROM tbl_sample", function (err, result) {
+         if (err) throw err;
+         console.log(result);
+       });
+   });
 const designs = [];
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
