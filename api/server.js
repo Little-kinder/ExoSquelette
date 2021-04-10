@@ -8,6 +8,7 @@ const app = express(),
       bodyParser = require("body-parser");
       port = 3080;
 
+
 // place holder for the data
 const mysql = require('mysql');
 
@@ -105,6 +106,8 @@ app.post('/api/createorder', function (req, res) {
   });
 
   console.log("COMMANDE ::::: " ,customer);
+  console.log("id item :" + JSON.stringify(req.body));
+  console.log("id item " + customer["idItem"]);
 });
 
 app.listen(port, () => {

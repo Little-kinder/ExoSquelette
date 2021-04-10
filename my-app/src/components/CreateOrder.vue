@@ -83,7 +83,7 @@ export default {
         },
         createOrder() {
             let order_info = [];
-            order_info.push(this.firstname, this.lastname, this.email, this.quantity, this.idItem);
+            order_info.push({'firstname' : this.firstname}, {'lastname': this.lastname} , {'email' : this.email }, {'quantite' : this.quantity}, {'idItem' : this.idItem});
                 OrderServices.createOrder(order_info).then(order => 
                 {
                     console.log("commande enregistrée : " + order) 
