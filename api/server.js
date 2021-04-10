@@ -8,6 +8,7 @@ const app = express(),
       bodyParser = require("body-parser");
       port = 3080;
 
+
 // place holder for the data
 const designs = [];
 app.use(function(req, res, next) {
@@ -81,6 +82,8 @@ app.get('/api/stl/:name', function (req, res, next) {
 app.post('/api/createorder', function (req, res) {
   const customer = req.body.order;
   console.log("COMMANDE ::::: " ,customer);
+  console.log("id item :" + JSON.stringify(req.body));
+  console.log("id item " + customer["idItem"]);
 });
 
 app.listen(port, () => {

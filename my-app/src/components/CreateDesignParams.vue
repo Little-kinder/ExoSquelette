@@ -21,7 +21,6 @@ const initial_data = {
     dataDesign: {}
 }
 import CreateDesignParamsItem from './CreateDesignParamsItem'
-import CreateOrder from './CreateOrder.vue'
 
 export default {
   name: 'CreateDesign',
@@ -29,8 +28,7 @@ export default {
     return initial_data;
   },
   components: {
-    CreateDesignParamsItem,
-    CreateOrder
+    CreateDesignParamsItem
   },
   computed: {
   },
