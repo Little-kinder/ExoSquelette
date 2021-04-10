@@ -31,13 +31,14 @@
                 <label for="designID">DesignID : {{ idItem }}</label>           
             </p>
 
+            <div id='stock-item'>
             <p>
                 <label for="quantity">Quantité</label>
-                <input type="number" name="quantity" id="quantity" v-model="quantity" min="1">              
+                <input type="number" name="quantity" id="quantity" v-model="quantity" min="1" :max="stock">              
             </p>
-
+            </div>
             <p>
-                <button type="button" @click='checkOrder()' class= "btn btn-danger"> 
+                <button type="button" @click='checkOrder(), updateStock()' class= "btn btn-danger"> 
                     <input type="submit" value="Valider"> 
                 </button>
                  
@@ -64,11 +65,13 @@ export default {
             lastname:null,
             email:null,
             idItem:null,
+            stock:null,
             quantity:null
         }
     },
     created() {
         this.idItem = this.$route.params.idItem;
+        this.stock = this.$route.params.stock;
     },
     computed: {
     },
@@ -84,9 +87,12 @@ export default {
                 OrderServices.createOrder(order_info).then(order => 
                 {
                     console.log("commande enregistrée : " + order) 
-                });
+                });  
             this.$router.push('home');
 
+        },
+        updateStock() {
+            this.$emit('updateStock', this.stock-this.quantity);
         },
         checkForm:function(e) {
             this.errors = [];
@@ -99,7 +105,7 @@ export default {
         }
     },
     props : {
-        activeDesign : String
+        stockItem : Number
     }
 }
 

@@ -11,14 +11,6 @@ const app = express(),
 // place holder for the data
 const mysql = require('mysql');
 
-const con = mysql.createConnection({
-  host: "localhost",
-  user: "root",
-  password: "",
-  database : "exosquelette",
-  port : "3306"
-});
-
 const designs = [];
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -89,14 +81,24 @@ app.get('/api/stl/:name', function (req, res, next) {
 
 
 app.post('/api/createorder', function (req, res) {
+  var con = mysql.createConnection({
+    host: "localhost",
+    user: "root",
+    password: "",
+    database : "exosquelette",
+    port : "3306"
+  });
   const customer = req.body.order;
   var id_item = customer[4];
   var quantity = customer[3];
+  var fname = customer[0];
+  var lname = customer[1];
+  var email = customer[2];
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connecté à la base de données MySQL!");
-    var sql = "INSERT INTO commande (id_utilisateur, id_piece, quantite) VALUES (?, ?, ?)";
-    con.query(sql, [1, id_item, quantity], function (err, result) {
+    var sql = "INSERT INTO commande (design_id, quantity, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)";
+    con.query(sql, [id_item, quantity, fname, lname, email], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
     });
