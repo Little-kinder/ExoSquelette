@@ -28,7 +28,7 @@ export default {
     return initial_data;
   },
   components: {
-    CreateDesignParamsItem
+    CreateDesignParamsItem,
   },
   computed: {
   },
