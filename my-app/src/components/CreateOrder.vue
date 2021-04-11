@@ -37,11 +37,7 @@
             </p>
 
             <p>
-<<<<<<< HEAD
-                <button @click='checkOrder(), updateStock()' class= "btn btn-danger"> 
-=======
                 <button type="button" @click="checkForm" class= "btn btn-danger"> 
->>>>>>> 84a762ea56dec54b11f73f306fbb30022ec51712
                     <input type="submit" value="Valider"> 
                 </button>
                  
