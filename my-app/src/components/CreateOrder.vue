@@ -3,7 +3,7 @@
 <template>
     <div>
         <Header />
-        <form id="commande-form" @submit="checkForm" method="get" novalidate="true">
+        <form id="commande-form" @submit="checkForm" method="post" novalidate="true">
             
             <p v-if="errors.length">
                 <b>Please correct the following error(s):</b>
@@ -31,14 +31,13 @@
                 <label for="designID">DesignID : {{ idItem }}</label>           
             </p>
 
-            <div id='stock-item'>
             <p>
                 <label for="quantity">Quantité</label>
-                <input type="number" name="quantity" id="quantity" v-model="quantity" min="1" :max="stock">              
+                <input type="number" name="quantity" id="quantity" v-model="quantity" min="1" max="20" onkeydown="return false">              
             </p>
-            </div>
+
             <p>
-                <button type="button" @click='checkOrder(), updateStock()' class= "btn btn-danger"> 
+                <button type="button" @click="checkForm" class= "btn btn-danger"> 
                     <input type="submit" value="Valider"> 
                 </button>
                  
@@ -65,13 +64,13 @@ export default {
             lastname:null,
             email:null,
             idItem:null,
-            stock:null,
+            type:null,
             quantity:null
         }
     },
     created() {
         this.idItem = this.$route.params.idItem;
-        this.stock = this.$route.params.stock;
+        this.type = this.$route.params.typeItem;
     },
     computed: {
     },
@@ -83,7 +82,7 @@ export default {
         },
         createOrder() {
             let order_info = [];
-            order_info.push({'firstname' : this.firstname}, {'lastname': this.lastname} , {'email' : this.email }, {'quantite' : this.quantity}, {'idItem' : this.idItem});
+            order_info.push(this.firstname, this.lastname , this.email , this.quantity, this.idItem, this.type);
                 OrderServices.createOrder(order_info).then(order => 
                 {
                     console.log("commande enregistrée : " + order) 
@@ -91,21 +90,17 @@ export default {
             this.$router.push('home');
 
         },
-        updateStock() {
-            this.$emit('updateStock', this.stock-this.quantity);
-        },
         checkForm:function(e) {
             this.errors = [];
-            if(this.firstname && this.lastname && this.email && this.quantity) return true;
+            if(this.firstname && this.lastname && this.email && this.quantity) {
+                this.createOrder();
+            }
             if(!this.firstname) this.errors.push("Veuillez remplir votre nom");
             if(!this.lastname) this.errors.push("Veuillez remplir votre prénom");
             if(!this.email) this.errors.push("Veuillez remplir votre email");
             if(!this.quantity) this.errors.push("Veuillez saisir la quantité");
             e.preventDefault();
         }
-    },
-    props : {
-        stockItem : Number
     }
 }
 

@@ -89,25 +89,43 @@ app.post('/api/createorder', function (req, res) {
     database : "exosquelette",
     port : "3306"
   });
+
   const customer = req.body.order;
   var id_item = customer[4];
   var quantity = customer[3];
   var fname = customer[0];
   var lname = customer[1];
   var email = customer[2];
+  var typeItem = customer[5];
+
   con.connect(function(err) {
     if (err) throw err;
     console.log("Connecté à la base de données MySQL!");
+
     var sql = "INSERT INTO commande (design_id, quantity, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)";
     con.query(sql, [id_item, quantity, fname, lname, email], function (err, result) {
       if (err) throw err;
       console.log("1 record inserted");
     });
+
+    var sql = "SELECT stock FROM typedesign WHERE type_name = ?";
+    con.query(sql, [typeItem], function (err, result) {
+      if (err) throw err;
+      var new_stock = result[0].stock - quantity;
+      console.log(new_stock);
+
+      var sql = "UPDATE typedesign SET stock = ? WHERE type_name = ?";
+      con.query(sql, [new_stock, typeItem], function (err, result) {
+        if (err) throw err;
+        console.log("Stock is updated");
+      });
+    });
+    
+    
+    
   });
 
   console.log("COMMANDE ::::: " ,customer);
-  console.log("id item :" + JSON.stringify(req.body));
-  console.log("id item " + customer["idItem"]);
 });
 
 app.listen(port, () => {
