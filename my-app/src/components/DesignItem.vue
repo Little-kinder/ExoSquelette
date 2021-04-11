@@ -3,16 +3,20 @@
         <td>{{ designItem.id }}</td>
         <td>{{ designItem.name }}</td>
         <td>{{ designItem.thickness }}</td>
-        <td><router-link :to="{name : 'order', params : {idItem : designItem.id, typeItem : designItem.type} }" tag="button" style="margin-left:45px"> Order </router-link></td>
+        <td><router-link :to="{name : 'order', params : {idItem : designItem.id, typeItem : designItem.type, stock : this.stockItem} }" tag="button" style="margin-left:45px"> Order </router-link></td>
     </tr>          
 </template>
 
 <script>
-    let  stockItem = 0;
     import DesignService from '../services/DesignService'
-
+    
     export default {
         name: 'DesignItem',
+        data() {
+            return {
+                stockItem:null
+            }    
+        },
         methods: {
             getDesignTypesStock() {
                 DesignService.getDesignTypeStock(this.designItem.type).then(response => {
