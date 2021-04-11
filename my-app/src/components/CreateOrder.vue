@@ -76,11 +76,15 @@ export default {
     },
     methods: {
         
+        
         checkOrder() {
             const form = document.getElementById('commande-form');
             form.addEventListener('submit', this.createOrder);
             
         },
+        /**
+         * récupération des données et persistance de la commande dans la BDD
+         */
         createOrder() {
             let order_info = [];
             order_info.push(this.firstname, this.lastname , this.email , this.quantity, this.idItem, this.type);
@@ -91,6 +95,9 @@ export default {
             this.$router.push('home');
 
         },
+        /**
+         * vérification de la bonne saisie des différents champs du formulaire
+         */
         checkForm:function(e) {
             this.errors = [];
             if(this.firstname && this.lastname && this.email && this.quantity) {
