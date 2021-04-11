@@ -9,8 +9,6 @@
                 <th>Design Id</th>
                 <th>Name</th>
                 <th>Thickness</th>
-                <th> Design Type </th>
-                <th>Stock Entrepot</th>
                 <th>Action</th>
             </tr>
             </thead>
