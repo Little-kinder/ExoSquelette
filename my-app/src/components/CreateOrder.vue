@@ -33,7 +33,7 @@
 
             <p>
                 <label for="quantity">Quantité</label>
-                <input type="number" name="quantity" id="quantity" v-model="quantity" min="1" max="20" onkeydown="return false">              
+                <input type="number" name="quantity" id="quantity" v-model="quantity" min=1 :max="stock" onkeydown="return false">              
             </p>
 
             <p>
@@ -65,12 +65,14 @@ export default {
             email:null,
             idItem:null,
             type:null,
-            quantity:null
+            quantity:null,
+            stock:null
         }
     },
     created() {
         this.idItem = this.$route.params.idItem;
         this.type = this.$route.params.typeItem;
+        this.stock = this.$route.params.stock;
     },
     computed: {
     },
@@ -92,6 +94,7 @@ export default {
                 {
                     console.log("commande enregistrée : " + order) 
                 });  
+            alert('Votre commande a bien été prise en compte');    
             this.$router.push('home');
 
         },
