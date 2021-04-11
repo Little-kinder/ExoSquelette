@@ -12,6 +12,18 @@ const app = express(),
 // place holder for the data
 const mysql = require('mysql');
 
+const  con = mysql.createConnection({
+  host: "localhost",
+  user: "root",
+  password: "",
+  database : "exosquelette",
+  port : "3306"
+});
+con.connect(function(err) {
+  if (err) throw err;
+  console.log("Connecté à la base de données MySQL!");
+});
+
 const designs = [];
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
@@ -29,7 +41,7 @@ app.get('/api/designs', (req, res) => {
 
 
 app.get('/api/designsTypes', (req, res) => {
-  console.log('api/designs called!!!!!!!')
+
   res.json(config3DModels);
 });
 
@@ -82,33 +94,39 @@ app.get('/api/stl/:name', function (req, res, next) {
 
 
 app.post('/api/createorder', function (req, res) {
-  var con = mysql.createConnection({
-    host: "localhost",
-    user: "root",
-    password: "",
-    database : "exosquelette",
-    port : "3306"
-  });
   const customer = req.body.order;
-  var id_item = customer[4];
-  var quantity = customer[3];
-  var fname = customer[0];
-  var lname = customer[1];
-  var email = customer[2];
-  con.connect(function(err) {
+  var id_item = customer[0];
+  var quantity = customer[1];
+  var fname = customer[2];
+  var lname = customer[3];
+  var email = customer[4];
+ 
+  var sql = "INSERT INTO commande (design_id, quantity, first_name, last_name, email) VALUES (?, ?, ?, ?, ?);";
+  con.query(sql, id_item, quantity, fname, lname, email, function (err, result) {
     if (err) throw err;
-    console.log("Connecté à la base de données MySQL!");
-    var sql = "INSERT INTO commande (design_id, quantity, first_name, last_name, email) VALUES (?, ?, ?, ?, ?)";
-    con.query(sql, [id_item, quantity, fname, lname, email], function (err, result) {
-      if (err) throw err;
-      console.log("1 record inserted");
-    });
+    console.log("1 record inserted");
   });
 
   console.log("COMMANDE ::::: " ,customer);
   console.log("id item :" + JSON.stringify(req.body));
-  console.log("id item " + customer["idItem"]);
+  console.log("id item " + customer[0]);
 });
+
+app.get("/api/designTypeStock/:designtype_id", function(req, res) {
+  
+    var type = req.params.designtype_id;
+    console.log(type);
+    var sql = "SELECT * from designtype WHERE designtype_id=?";
+    con.query(sql, [type], function(err, result, fields) {
+      if (err) throw err;
+      console.log(fields);
+      console.log(result[0]);
+      console.log(result[0]['stock']);
+      res.json([result[0], result[0]['stock']]);
+      return result[0];
+  });
+});
+
 
 app.listen(port, () => {
     console.log(`Server listening on the port::${port}`);

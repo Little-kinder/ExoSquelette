@@ -38,7 +38,7 @@
             </p>
             </div>
             <p>
-                <button type="button" @click='checkOrder(), updateStock()' class= "btn btn-danger"> 
+                <button @click='checkOrder(), updateStock()' class= "btn btn-danger"> 
                     <input type="submit" value="Valider"> 
                 </button>
                  
@@ -76,6 +76,7 @@ export default {
     computed: {
     },
     methods: {
+        
         checkOrder() {
             const form = document.getElementById('commande-form');
             form.addEventListener('submit', this.createOrder);
@@ -83,7 +84,7 @@ export default {
         },
         createOrder() {
             let order_info = [];
-            order_info.push({'firstname' : this.firstname}, {'lastname': this.lastname} , {'email' : this.email }, {'quantite' : this.quantity}, {'idItem' : this.idItem});
+            order_info.push([this.idItem, this.quantity, this.firstname, this.lastname, this.email]);
                 OrderServices.createOrder(order_info).then(order => 
                 {
                     console.log("commande enregistrée : " + order) 
@@ -101,6 +102,7 @@ export default {
             if(!this.lastname) this.errors.push("Veuillez remplir votre prénom");
             if(!this.email) this.errors.push("Veuillez remplir votre email");
             if(!this.quantity) this.errors.push("Veuillez saisir la quantité");
+            if(this.quantity > this.stock) this.errors.push("Veuillez saisir une quantité inferieure a : " + this.stock);
             e.preventDefault();
         }
     },

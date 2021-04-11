@@ -23,9 +23,14 @@ async function createDesign(data) {
     return await response.json();
 }
 
+async function getDesignTypeStock(designtype_id) {
+    const response = await fetch(`${apiUrlService('designTypeStock')}${designtype_id}`);
+    return await response.json();
+}
+
 
 function model3dUrl(namefile) {
     return `${apiUrlService("stl")}/${namefile}.stl`
 }
 
-export default {createDesign, getAllDesignsParameters, model3dUrl, getAllDesigns}
+export default {createDesign, getAllDesignsParameters, model3dUrl, getAllDesigns, getDesignTypeStock}

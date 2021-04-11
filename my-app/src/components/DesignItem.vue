@@ -3,20 +3,33 @@
         <td>{{ designItem.id }}</td>
         <td>{{ designItem.name }}</td>
         <td>{{ designItem.thickness }}</td>
-        <td>{{ stockItem }}</td>
+        <td>{{ designItem.type}} </td>
+        <td> {{ this.stockItem }} </td>
         <td><router-link :to="{name : 'order', params : {idItem : designItem.id, stock : stockItem} }" tag="button" style="margin-left:45px"> Order </router-link></td>
     </tr>          
 </template>
 
 <script>
+    let  stockItem = 0;
+    import DesignService from '../services/DesignService'
+
     export default {
         name: 'DesignItem',
         data() {
             return {
-                stockItem: 20
+                stockItem 
             }
         },
         methods: {
+            getDesignTypesStock() {
+                DesignService.getDesignTypeStock(this.designItem.type).then(response => {
+                    console.log(response);
+                    // let designtype = response;
+                    this.stockItem = response[1];
+                    
+
+                });
+            },
             setActive() {
                 // debugger //  eslint-disable-line no-debugger
                 let payload = {
@@ -27,6 +40,9 @@
             orderDesign() {
             this.$router.push('order');
             }
+        },
+        created() {
+            this.getDesignTypesStock();
         },
         props: ['designItem']
      }
