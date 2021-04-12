@@ -127,7 +127,7 @@ app.get("/api/designTypeStock/:designtype_id", function(req, res) {
   
     var type = req.params.designtype_id;
     console.log(type);
-    var sql = "SELECT * from designtype WHERE designtype_id=?";
+    var sql = "SELECT * from typedesign WHERE designtype_id=?";
     con.query(sql, [type], function(err, result, fields) {
       if (err) throw err;
       console.log(fields);
