@@ -3,6 +3,7 @@
         <td>{{ designItem.id }}</td>
         <td>{{ designItem.name }}</td>
         <td>{{ designItem.thickness }}</td>
+        <!--bouton de redirection vers la page commande-->
         <td><router-link :to="{name : 'order', params : {idItem : designItem.id, typeItem : designItem.type, stock : this.stockItem} }" tag="button" style="margin-left:45px"> Order </router-link></td>
     </tr>          
 </template>
@@ -18,6 +19,9 @@
             }    
         },
         methods: {
+            /**
+             * obtention du stock disponible lié au type de Design de la variable designItem
+             */
             getDesignTypesStock() {
                 DesignService.getDesignTypeStock(this.designItem.type).then(response => {
                     console.log(response);

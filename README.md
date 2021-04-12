@@ -40,7 +40,7 @@ Folder : `my-app/`
 `npm install`
 
 ### Launch
-`npm run serve`
+`npm run dev`
 
 ### dependencies
 - [VueJS](https://vuejs.org/)
@@ -53,6 +53,8 @@ Folder : `api/`
 
 ### Install
 `npm install`
+`import exosquelette.sql into PHPMyAdmin`
+
 
 ### Launch
 `npm run dev`

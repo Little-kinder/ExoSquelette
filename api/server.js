@@ -10,9 +10,20 @@ const app = express(),
 
 
 // place holder for the data
+/**
+ * module mysql pour nodeJs
+ */
 const mysql = require('mysql');
+
+/**
+ * module d'automatisation de job pour nodeJS
+ */
 const schedule = require('node-schedule');
 
+/**
+ * connection à la BDD
+ * verifier de votre côté WAMP que les ports correspondent !
+ */
 const  con = mysql.createConnection({
   host: "localhost",
   user: "root",
@@ -20,11 +31,17 @@ const  con = mysql.createConnection({
   database : "exosquelette",
   port : "3306"
 });
+
+const designs = [];
+
 con.connect(function(err) {
   if (err) throw err;
   console.log("Connecté à la base de données MySQL!");
 });
 
+/**
+ * événement temporaire toute les 20 secondes de validation des commande et réaprovisonnement au besoin
+ */
 const job = schedule.scheduleJob('20 * * * * *', function() {
   var stock;
   var commandes;
@@ -71,7 +88,7 @@ const job = schedule.scheduleJob('20 * * * * *', function() {
   console.log(commandes);
 });
 
-const designs = [];
+
 app.use(function(req, res, next) {
   res.header("Access-Control-Allow-Origin", "*");
   res.header("Access-Control-Allow-Headers", "Origin, X-Requested-With, Content-Type, Accept");
@@ -139,7 +156,9 @@ app.get('/api/stl/:name', function (req, res, next) {
   })
 });
 
-
+/**
+ * requête api pour obtenir le stock d'un type de design
+ */
 app.get("/api/designTypeStock/:designtype_id", function(req, res) {
   
     var type = req.params.designtype_id;
@@ -155,7 +174,9 @@ app.get("/api/designTypeStock/:designtype_id", function(req, res) {
   });
 });
 
-
+/**
+ * requête api pour persister une commande dans la BDD
+ */
 app.post('/api/createorder', function (req, res) {
   const customer = req.body.order;
   var id_item = customer[4];
@@ -170,39 +191,6 @@ app.post('/api/createorder', function (req, res) {
       if (err) throw err;
       console.log("1 record inserted");
     });
-
-    // var sql = "SELECT stock FROM typedesign WHERE type_name = ?";
-    // con.query(sql, [typeItem], function (err, result) {
-    //   if (err) throw err;
-    //   var new_stock = result[0].stock - quantity;
-
-    //   var sql = "UPDATE typedesign SET stock = ? WHERE type_name = ?";
-    //   con.query(sql, [new_stock, typeItem], function (err, result) {
-    //     if (err) throw err;
-    //     console.log("Stock is updated");
-    //   });
-    // });
-
-    // const sleep = (milliseconds) => {
-    //   return new Promise(resolve => setTimeout(resolve, milliseconds))
-    // }
-
-    // sleep(1500).then(() => {
-    //   var sql = "SELECT stock FROM typedesign WHERE type_name = ?";
-    //   con.query(sql, [typeItem], function (err, result) {
-    //     if (err) throw err;
-    //     console.log("???");
-    //     if (result[0].stock == 0)
-    //     {
-    //       var sql = "UPDATE typedesign SET stock = 20 WHERE type_name = ?";
-    //       con.query(sql, [typeItem], function (err, result) {
-    //         if (err) throw err;
-    //         console.log("Stock is reset");
-    //       });
-    //     }    
-    //   });
-    // })
-    
   console.log("COMMANDE ::::: " ,customer);
 });
 

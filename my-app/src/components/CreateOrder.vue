@@ -2,6 +2,7 @@
 
 <template>
     <div>
+        <!-- formulaire de commande-->
         <Header />
         <form id="commande-form" @submit="checkForm" method="post" novalidate="true">
             
@@ -85,7 +86,7 @@ export default {
             
         },
         /**
-         * récupération des données et persistance de la commande dans la BDD
+         * récupération des données du formulaire et persistance de la commande dans la BDD
          */
         createOrder() {
             let order_info = [];
