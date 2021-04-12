@@ -1,4 +1,4 @@
 */node_modules/*
 dist
-stl/
+*.stl
 package-lock.json
