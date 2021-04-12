@@ -25,28 +25,45 @@ con.connect(function(err) {
   console.log("Connecté à la base de données MySQL!");
 });
 
-const job = schedule.scheduleJob('5 * * * * *', function() {
-  var valide = 1;
-  var info_stock = [0, 0, 0];
+const job = schedule.scheduleJob('20 * * * * *', function() {
   var stock;
   var commandes;
   var sql1 = "SELECT * FROM typedesign";
-  var sql2 = "SELECT * FROM commande";
+  var sql2 = "SELECT * FROM commande WHERE valide = 0";
 
   con.query(sql1, function (err, result) {
     if (err) throw err;
     stock = result;
-    console.log(stock);
 
     con.query(sql2, function (err, result) {
       if (err) throw err;
       commandes = result;
-      console.log(commandes);
 
-      commandes.array.forEach(element => {
-        stock.array.forEach(type => {
+      commandes.forEach(element => {
+        stock.forEach(type => {
+          if (element.design_type == type.type_name) {
+            if (element.quantity <= type.stock) {
+              type.stock = type.stock - element.quantity;
+              var sql3 = "UPDATE commande SET valide = 1 WHERE id = ?"
+              con.query(sql3, [element.id], function (err, result) {
+                if (err) throw err;
+              });
+              var sql4 = "UPDATE typedesign SET stock = ? WHERE type_name = ?"
+              con.query(sql4, [type.stock, type.type_name], function (err, result) {
+                if (err) throw err;
+              });
+            }
+          }
+        }); 
+      });
 
-        });
+      stock.forEach(type => {
+        if (type.stock == 0) {
+          var sql4 = "UPDATE typedesign SET stock = 50 WHERE type_name = ?"
+          con.query(sql4, [type.type_name], function (err, result) {
+            if (err) throw err;
+          });
+        }
       });
     });
   });
