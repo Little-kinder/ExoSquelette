@@ -9,6 +9,7 @@
                 <th>Design Id</th>
                 <th>Name</th>
                 <th>Thickness</th>
+                <th>Action</th>
             </tr>
             </thead>
             <tbody>
@@ -18,9 +19,9 @@
                 />
             </tbody>
         </table>
-        <button>
+        <!-- <button>
             <router-link to="/order">order</router-link>
-        </button>
+        </button> -->
     </div>
 </template>
 

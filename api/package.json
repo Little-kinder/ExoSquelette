@@ -20,8 +20,12 @@
   "homepage": "https://github.com/bbachi/vuejs-nginx-docker#readme",
   "dependencies": {
     "@asigloo/vue-dynamic-forms": "^3.14.0",
+    "@jscad/openjscad": "^1.6.1",
     "express": "^4.17.1",
     "http-proxy-middleware": "^1.0.4",
+    "mysql": "^2.18.1",
+    "node-module": "^2.0.0",
+    "node-schedule": "^2.0.0",
     "random-id": "^1.0.4"
   },
   "devDependencies": {
